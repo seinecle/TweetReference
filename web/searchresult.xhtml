@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>TweetReference</title>
+        <h:outputStylesheet library="css" name="index.css" />
+    </h:head>
+    <h:body>    
+        <h:link value="back to the home page" outcome="index.xhtml" />
+        <h1>Tweet references for #{userBean.screenNameTarget}:</h1>
+        <p:dataList value="#{searchResultsBean.references}" var="ref" itemType="none">  
+            <br></br>
+            <br></br>
+            <br></br>
+            <span style="float: left;"><img src="#{ref.author.pic_url}"></img></span>
+            <span style="font-size: 12px;padding-left: 10px;">
+                #{ref.author.realName} (@#{ref.author.screenName})</span>
+            <br></br>
+            <span style="font-size: 12px;padding-left: 10px;">#{ref.author.description}</span>
+            <br></br>
+            <span style="font-size: 12px;padding-left: 10px;">[#{ref.author.followersCount} followers on Twitter].</span>
+            <br></br>
+            <br></br>
+            said in #{ref.monthYear}:
+            <span style="font-size: 40px;">"</span>#{ref.text}<span style="font-size: 40px;">"</span>  
+        </p:dataList>  
+    </h:body>
+</html>
+

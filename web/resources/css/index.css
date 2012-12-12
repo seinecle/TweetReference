@@ -1,0 +1,25 @@
+/* 
+    Document   : index
+    Created on : Dec 11, 2012, 9:23:15 PM
+    Author     : C. Levallois
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body { 
+    font-family: tahoma;
+    background-image:url(../img/handmadepaper.png);
+    background-repeat:repeat;
+}
+
+.button{
+    font-family: tahoma;
+    width:100%;
+    border:none;
+    background: none;
+}
+
+h1{
+    margin:auto;
+    text-align:center;
+}
