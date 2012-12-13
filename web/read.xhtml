@@ -8,17 +8,40 @@
         <h:outputStylesheet library="css" name="index.css" />
 
     </h:head>
-    <h:body>    
-        <h1>Read tweet reference</h1>
-        <br />
-        <h:form prependId ="false" >
-            <h:outputText value ="Twitter handle:"></h:outputText>
-            <h:inputText id="handle" value="#{controllerBean.searchTerm}"/>
-            <p:watermark for="handle" value="@name" />
-            <p:commandButton value ="search" id="search" action ="#{controllerBean.doSearch}"/>
+    <h:body>
+        <div id="box">
+            <div id="text">
 
-        </h:form>
+                <h1>Read tweet reference</h1>
+                <br />
+                <h:form prependId ="false" >
+                    <h:outputText value ="Twitter handle:"></h:outputText>
+                    <h:inputText id="handle" value="#{controllerBean.searchTerm}"/>
+                    <p:watermark for="handle" value="@name" />
+                    <p:commandButton value ="search" id="search" action ="#{controllerBean.doSearch}"/>
+                    <br></br>
+                    <br></br>
+                    <h:outputText value ="try to search for &quot;@seinecle&quot;"></h:outputText>
 
+                </h:form>
+            </div>
+        </div>
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-37012233-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
     </h:body>
 </html>
 

@@ -49,21 +49,23 @@ public class ControllerBean implements Serializable {
         try {
 
 
-            if (!local) {
-                m = new Mongo("linus.mongohq.com", 10088);
-                morphia = new Morphia();
-                String pass = APIkeys.getMongosecret();
-                ds = morphia.createDatastore(m, APIkeys.getMongoKey(), "seinecle", pass.toCharArray());
-                if (ds != null) {
-                    System.out.println("Morphia datastore on CloudBees / MongoHQ created!!!!!!!");
-                }
-                morphia.map(Tweet.class);
-            } else {
+            if (AdminPanel.isMongoLocal()) {
                 m = new Mongo();
                 morphia = new Morphia();
                 ds = morphia.createDatastore(m, "twitteref");
                 morphia.map(Tweet.class);
-                
+
+            } else {
+                m = new Mongo("linus.mongohq.com", 10088);
+                morphia = new Morphia();
+                String pass = APIkeys.getMongosecret();
+
+                ds = morphia.createDatastore(m, APIkeys.getMongoKey(), "seinecle", pass.toCharArray());
+
+                if (ds != null) {
+                    System.out.println("Morphia datastore on CloudBees / MongoHQ created!!!!!!!");
+                }
+                morphia.map(Tweet.class);
             }
         } catch (UnknownHostException ex) {
             Logger.getLogger(ControllerBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -86,6 +88,11 @@ public class ControllerBean implements Serializable {
     }
 
     public String getSearchTerm() {
+        if (searchTerm != null) {
+            if (!searchTerm.startsWith("@")) {
+                searchTerm = "@" + searchTerm;
+            }
+        }
         return searchTerm;
     }
 

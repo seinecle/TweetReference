@@ -4,11 +4,14 @@
  */
 package OAuth;
 
+import Controllers.AdminPanel;
 import Utils.APIkeys;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.TwitterApi;
@@ -50,17 +53,14 @@ public class OAuth implements Serializable {
         return requestToken;
     }
 
-    public String authorize() throws IOException {
-        if (!debug) {
-            callback = "http://www.tweetreference.org/pages/authsuccess.xhtml";
+    public void authorize() throws IOException {
+        if (AdminPanel.isLocal()) {
+            callback = "http://localhost:8080/TweetReference/pages/authsuccess.xhtml";
+
         } else {
-            callback = "http://localhost:8080/Twitteref/pages/authsuccess.xhtml";
-
+            callback = "http://www.tweetreference.org/pages/authsuccess.xhtml";
         }
 
-        if (service != null) {
-            return "write";
-        }
         service = new ServiceBuilder()
                 .provider(TwitterApi.class)
                 .apiKey(APIkeys.getTwitterAPIKey())
@@ -72,6 +72,5 @@ public class OAuth implements Serializable {
         String urlAuthorization = service.getAuthorizationUrl(requestToken);
         FacesContext.getCurrentInstance().getExternalContext().redirect(urlAuthorization);
 
-        return null;
     }
 }

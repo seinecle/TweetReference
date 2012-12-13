@@ -6,42 +6,37 @@
     <h:head>
         <title>TweetReference</title>
         <h:outputStylesheet library="css" name="index.css" />
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
-        <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-        <script src="/resources/demos/external/jquery.bgiframe-2.1.2.js"></script>
-        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     </h:head>
     <h:body>
-        <script>
-            //<![CDATA[
-            $(function() {
-                $("#dialog-modal").dialog({
-                    height: 300,
-                    width: 550,
-                    modal: true
-                });
-            });
-            //]]>
-        </script>
-        <h1>Reference letters from your community on Twitter</h1>
-        <br />
-        <h:form prependId ="false">
-            <h:commandButton value="Write a tweet reference" action="#{oAuth.authorize}" styleClass="button" onclick="setTimeout('document.getElementById(\'' + this.id + '\').disabled=true;', 50);"></h:commandButton>
-            <h:commandButton value="Read a tweet reference" action="read" styleClass="button"></h:commandButton>
-            <h:inputHidden value="#{controllerBean.dummy}"></h:inputHidden>
-
-        </h:form>
-        <div id="dialog-modal" title="Why this app?">
-            <p>[close this dialog to start]</p>
-            <p>I am applying for a position for which I need to provide references.</p>
-            <p>Why not ask the people I interact on Twitter for references? After all, many of them know more about aspects of my work than colleagues I see everyday in real life.</p>
-            <p>This web app provides the way to <b>give and receive</b> references from Twitter users, not just for me but everybody. In the format of 140 characters max of course!
-            </p>
-            <p>Use it and send me feedback at @seinecle. Oh, and help me get this job, write a nice reference for me!</p>
-
-            [I am <a href="http://www.clementlevallois.net">Clement Levallois</a>. App created on 11-12 December 2012.
-            Are you a web designer? Get in touch, we could make this app much nicer.]
+        <div id="box">
+            <div id="text">
+                <div id="appTitle">TweetReference</div>
+                <div id="subtitle">Get reference letters from your community on Twitter</div>
+                <br />
+                <h:form prependId ="false">
+                    <h:commandButton value="Write a tweet reference" action="#{oAuth.authorize}" styleClass="button" onclick="setTimeout('document.getElementById(\'' + this.id + '\').disabled=true;', 50);"></h:commandButton>
+                    <h:commandButton value="Read a tweet reference" action="read" styleClass="button"></h:commandButton>
+                    <h:inputHidden value="#{controllerBean.dummy}"></h:inputHidden>
+                </h:form>
+            </div>
         </div>
+        <h:link value="{why this app?}" outcome="about.xhtml" />
+        <script type="text/javascript">
+
+                        var _gaq = _gaq || [];
+                        _gaq.push(['_setAccount', 'UA-37012233-1']);
+                        _gaq.push(['_trackPageview']);
+
+                        (function() {
+                            var ga = document.createElement('script');
+                            ga.type = 'text/javascript';
+                            ga.async = true;
+                            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                            var s = document.getElementsByTagName('script')[0];
+                            s.parentNode.insertBefore(ga, s);
+                        })();
+
+        </script>
     </h:body>
 </html>
 

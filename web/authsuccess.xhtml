@@ -1,15 +1,54 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>TweetReference</title>
+        <h:outputStylesheet library="css" name="index.css" />
+
     </h:head>
     <h:body>
-        <h:form prependId ="false">
-            <h:outputText value="You have been successfully identified."></h:outputText>
-            <h:commandButton value="continue" actionListener="#{successAuth.toWrite}" action="write" styleClass="button"></h:commandButton>
-            <h:inputHidden value="#{successAuth.dummy}"></h:inputHidden>
-        </h:form>    </h:body>
+        <div id="box">
+            <div id="text">
+                <div id="panel">
+                    <p:panel rendered="#{successAuth.successAuth}">
+                        <h:form prependId ="false">
+
+                            <h:outputText value="You have been successfully identified."></h:outputText>
+                            <h:commandButton value="continue" action="#{successAuth.toWrite}" styleClass="button"></h:commandButton>
+                        </h:form>
+                    </p:panel>
+                    <p:panel rendered="#{!successAuth.successAuth}">
+                        <h:form prependId ="false">
+
+                            <h:outputText value="Identification with Twitter failed (did you double check your password?)"></h:outputText>
+                            <h:commandButton value="new attempt" action="index" styleClass="button"></h:commandButton>
+                        </h:form>
+                    </p:panel>
+                </div>
+                <h:form>
+                    <h:inputHidden value="#{successAuth.dummy}"></h:inputHidden>
+                </h:form>
+            </div>
+        </div>
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-37012233-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
+    </h:body>
+
 </html>
 

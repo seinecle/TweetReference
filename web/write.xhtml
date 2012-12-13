@@ -8,22 +8,49 @@
         <h:outputStylesheet library="css" name="index.css" />
 
     </h:head>
-    <h:body>    
-        <h1>Write a tweet reference for a member of your community on Twitter</h1>
-        <br />
-        <h:form prependId ="false" >
-            <p:inputText id="target" value ="#{userBean.screenNameTarget}" size="60"/>
-            <p:watermark for="target" value="@personYouRecommand" />
-            <p:inputText id="status" value ="#{userBean.status}" size="200">
-                <p:watermark for="status" value="Say something nice here..." />
-                <p:ajax event="keyup" update="counter"/>
-            </p:inputText>
-            <br></br>
-            <h:outputText id="counter" value="#{userBean.counter}" escape="false"/>
-            <br></br>
-            <p:commandButton value="send reference" action="#{userBean.saveAndSearch}"/>
-        </h:form>
+    <h:body>
+        <div id="box">
+            <div id="text">
 
+                <div id="title">Write a tweet reference for a member of your community on Twitter</div>
+                <br></br>
+                <br></br>
+                <br></br>
+                <h:form prependId ="false" >
+                    <p:inputText id="target" value ="#{userBean.screenNameTarget}" size="60"/>
+                    <p:watermark for="target" value="@the_person_you_write_about" />
+                    <br></br>
+                    <br></br>
+                    <p:inputText id="status" value ="#{userBean.status}" size="200">
+                        <p:watermark for="status" value="Say something nice here..." />
+                        <p:ajax event="keyup" update="counter"/>
+                    </p:inputText>
+                    <br></br>
+                    <h:outputText id="counter" value="#{userBean.counter}" escape="false"/>
+                    <br></br>
+                    <br></br>
+                    <p:commandButton value="publish your Tweet reference" action="#{userBean.saveAndSearch}"/>
+                    <br></br>
+                    <h:outputText value="note: your Tweet reference will only appear here - not be tweeted."></h:outputText>
+                </h:form>
+            </div>
+        </div>
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-37012233-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
     </h:body>
 </html>
 

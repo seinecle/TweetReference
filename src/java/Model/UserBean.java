@@ -24,7 +24,6 @@ public class UserBean {
     private String counter;
     @ManagedProperty("#{controllerBean}")
     private ControllerBean controllerBean;
-    
 
     public void setControllerBean(ControllerBean controllerBean) {
         this.controllerBean = controllerBean;
@@ -46,6 +45,9 @@ public class UserBean {
     }
 
     public void setScreenNameTarget(String screenNameTarget) {
+        if (!screenNameTarget.startsWith("@")) {
+            screenNameTarget = "@" + screenNameTarget;
+        }
         controllerBean.setSearchTerm(screenNameTarget);
         this.screenNameTarget = screenNameTarget;
 
@@ -74,7 +76,7 @@ public class UserBean {
     }
 
     public String saveAndSearch() {
-        if (140-status.length()<0){
+        if (140 - status.length() < 0) {
             return null;
         }
         Tweet tweet = new Tweet();

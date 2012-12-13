@@ -4,6 +4,7 @@
  */
 package Model;
 
+import Utils.Months;
 import com.google.code.morphia.annotations.Id;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -19,7 +20,6 @@ public class Tweet implements Serializable {
     private String target;
     private String monthYear;
     private Date date;
-    private String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
     public Tweet() {
     }
@@ -68,12 +68,11 @@ public class Tweet implements Serializable {
         this.monthYear = monthYear;
     }
 
-    
     public String getMonthYear() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int month = cal.get(Calendar.MONTH);
         int year = cal.get(Calendar.YEAR);
-        return months[month] + " " + year;
+        return Months.getMonths(month) + " " + year;
     }
 }
