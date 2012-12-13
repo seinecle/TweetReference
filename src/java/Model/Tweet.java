@@ -45,7 +45,7 @@ public class Tweet implements Serializable {
     }
 
     public void setTarget(String target) {
-        this.target = target.replaceAll("\\@", "");
+        this.target = target.replaceAll("\\@", "").trim();
     }
 
     public ObjectId getId() {

@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.io.StringReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -17,6 +19,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
@@ -75,9 +79,14 @@ public class SuccessAuth implements Serializable {
         oAuth.getService().signRequest(accessToken, request); // the access token from step 4
         Response response = request.send();
 
-//        System.out.println(response.getBody());
         String responseString = response.getBody();
-        responseString = responseString.replaceAll("&amp;", "and");
+        responseString = StringUtils.replace(responseString,"&amp;","and");
+        responseString = StringUtils.replace(responseString,"&quot;","");
+        responseString = StringUtils.replace(responseString,"&lt;","");
+        responseString = StringUtils.replace(responseString,"&gt;","");
+        responseString = StringUtils.replace(responseString,"&apos;","");
+        responseString = StringEscapeUtils.unescapeHtml4(responseString);
+        System.out.println(responseString);
 
 //        BufferedReader br = new BufferedReader(new InputStreamReader(response.getStream()));
 //        InputSource is = new InputSource(br);
@@ -102,4 +111,5 @@ public class SuccessAuth implements Serializable {
     public void setSuccessAuth(boolean successAuth) {
         this.successAuth = successAuth;
     }
+
 }

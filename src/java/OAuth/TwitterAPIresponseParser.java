@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -78,25 +79,32 @@ public class TwitterAPIresponseParser extends DefaultHandler {
 
         if (qName.matches("name")) {
             newName = true;
+            sbnewName = new StringBuilder();
+
         }
 
         if (qName.matches("screen_name")) {
+            sbnewScreenName = new StringBuilder();
             newScreenName = true;
         }
 
         if (qName.matches("location")) {
+            sbnewLocation = new StringBuilder();
             newLocation = true;
         }
 
         if (qName.matches("description")) {
+            sbnewDescription = new StringBuilder();
             newDescription = true;
         }
 
         if (qName.matches("profile_image_url")) {
+            sbnewProfile_image_url = new StringBuilder();
             newProfile_image_url = true;
         }
 
         if (qName.matches("followers_count")) {
+            sbnewFollowers_count = new StringBuilder();
             newFollowers_count = true;
         }
 
@@ -107,27 +115,21 @@ public class TwitterAPIresponseParser extends DefaultHandler {
     public void characters(char[] ch, int start, int length) throws SAXException {
 
         if (newName) {
-            sbnewName = new StringBuilder();
             sbnewName.append(ch, start, length);
         }
         if (newScreenName) {
-            sbnewScreenName = new StringBuilder();
             sbnewScreenName.append(ch, start, length);
         }
         if (newLocation) {
-            sbnewLocation = new StringBuilder();
             sbnewLocation.append(ch, start, length);
         }
         if (newDescription) {
-            sbnewDescription = new StringBuilder();
             sbnewDescription.append(ch, start, length);
         }
         if (newProfile_image_url) {
-            sbnewProfile_image_url = new StringBuilder();
             sbnewProfile_image_url.append(ch, start, length);
         }
         if (newFollowers_count) {
-            sbnewFollowers_count = new StringBuilder();
             sbnewFollowers_count.append(ch, start, length);
         }
     }
@@ -138,12 +140,14 @@ public class TwitterAPIresponseParser extends DefaultHandler {
 
         //case when an affiliation is provided with the author
         if (qName.equals("user")) {
-            author.setDescription(sbnewDescription.toString());
-            author.setLocation(sbnewLocation.toString());
-            author.setScreenName(sbnewScreenName.toString());
-            author.setRealName(sbnewName.toString());
+
+            author.setDescription(StringEscapeUtils.unescapeHtml4(sbnewDescription.toString()));
+            System.out.println("description in parser: " + StringEscapeUtils.unescapeHtml4(sbnewDescription.toString()));
+            author.setLocation(StringEscapeUtils.unescapeHtml4(sbnewLocation.toString()));
+            author.setScreenName(StringEscapeUtils.unescapeHtml4(sbnewScreenName.toString()));
+            author.setRealName(StringEscapeUtils.unescapeHtml4(sbnewName.toString()));
             author.setFollowersCount(sbnewFollowers_count.toString());
-            author.setPic_url(sbnewProfile_image_url.toString());
+            author.setPic_url(StringEscapeUtils.unescapeHtml4(sbnewProfile_image_url.toString()));
         }
 
         if (qName.equals("name")) {

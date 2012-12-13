@@ -49,7 +49,7 @@ public class UserBean {
             screenNameTarget = "@" + screenNameTarget;
         }
         controllerBean.setSearchTerm(screenNameTarget);
-        this.screenNameTarget = screenNameTarget;
+        this.screenNameTarget = screenNameTarget.trim();
 
     }
 

@@ -80,7 +80,7 @@ public class ControllerBean implements Serializable {
     }
 
     public String doSearch() {
-        searchTerm = searchTerm.replace("@", "");
+        searchTerm = searchTerm.replace("@", "").trim();
         System.out.println("search term: " + searchTerm);
         listTweets = ds.createQuery(Tweet.class).field("target").equal(searchTerm).asList();
         System.out.println("listTweets size: " + listTweets.size());
@@ -97,7 +97,7 @@ public class ControllerBean implements Serializable {
     }
 
     public void setSearchTerm(String searchTerm) {
-        this.searchTerm = searchTerm;
+        this.searchTerm = searchTerm.trim();
     }
 
     public void setListTweets(List<Tweet> listTweets) {
