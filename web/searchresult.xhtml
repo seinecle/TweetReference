@@ -2,7 +2,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <f:metadata>
+        <f:viewParam name="references" value ="#{searchResultsBean.references}"/>
+        <f:viewParam name="searchTerm" value ="#{controllerBean.searchTerm}"/>
+    </f:metadata>
     <h:head>
         <title>TweetReference</title>
         <h:outputStylesheet library="css" name="index.css" />
@@ -10,7 +16,12 @@
     <h:body>    
 
         <h:link value="back to the home page" outcome="index.xhtml" />
-
+        <h:form>
+            <p:commandButton id="downloadLink" value="Download" ajax="false"   
+                             icon="ui-icon-arrowthichk-s" immediate="true">  
+                <p:fileDownload value="#{fileDownloadController.file}" />  
+            </p:commandButton>  
+        </h:form>
         <div id="box">
             <div id="text">
                 <div id="title">Tweet references for #{controllerBean.searchTerm}:</div>
@@ -19,15 +30,15 @@
                         <br></br>
                         <br></br>
                         <br></br>
-                        <span style="float: left;"><img src="#{ref.author.pic_url}" width="85"></img></span>
+                        <span style="float: left;"><img src="#{ref.source_user.profile_image_url}" width="85"></img></span>
                         <span style="font-size: 12px;padding-left: 10px;">
-                            <b>#{ref.author.realName} (@#{ref.author.screenName})</b></span>
+                            <b>#{ref.source_user.name} (@#{ref.source_user.screen_name})</b></span>
                         <br></br>
-                        <span style="font-size: 12px;padding-left: 10px;">#{ref.author.description}</span>
+                        <span style="font-size: 12px;padding-left: 10px;">#{ref.source_user.description}</span>
                         <br></br>
-                        <span style="font-size: 12px;padding-left: 10px;"><b>#{ref.author.location}</b></span>
+                        <span style="font-size: 12px;padding-left: 10px;"><b>#{ref.source_user.location}</b></span>
                         <br></br>
-                        <span style="font-size: 12px;padding-left: 10px;">[#{ref.author.followersCount} followers on Twitter].</span>
+                        <span style="font-size: 12px;padding-left: 10px;">[#{ref.source_user.followers_count} followers on Twitter].</span>
                         <br></br>
                         <br></br>
                         said in #{ref.monthYear}:

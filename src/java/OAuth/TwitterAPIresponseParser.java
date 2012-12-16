@@ -4,7 +4,7 @@
  */
 package OAuth;
 
-import Model.Author;
+import Model.User;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -34,20 +34,21 @@ public class TwitterAPIresponseParser extends DefaultHandler {
     private StringBuilder sbnewDescription;
     private StringBuilder sbnewProfile_image_url;
     private StringBuilder sbnewFollowers_count;
-    private Author author;
+    private StringBuilder sbnewUrl;
+    private User author;
 
     public TwitterAPIresponseParser(InputSource newIs) {
         this.is = newIs;
     }
 
-    public Author parse() throws IOException {
+    public User parse() throws IOException {
 
 
         //get a factory
         SAXParserFactory spf = SAXParserFactory.newInstance();
         try {
 
-            author = new Author();
+            author = new User();
             //get a new instance of parser
             SAXParser sp = spf.newSAXParser();
 
@@ -65,9 +66,9 @@ public class TwitterAPIresponseParser extends DefaultHandler {
         }
 
         System.out.println("author:");
-        System.out.println(author.getRealName());
+        System.out.println(author.getName());
         System.out.println(author.getDescription());
-        System.out.println(author.getPic_url());
+        System.out.println(author.getProfile_image_url());
         return author;
 
     }
@@ -144,10 +145,10 @@ public class TwitterAPIresponseParser extends DefaultHandler {
             author.setDescription(StringEscapeUtils.unescapeHtml4(sbnewDescription.toString()));
             System.out.println("description in parser: " + StringEscapeUtils.unescapeHtml4(sbnewDescription.toString()));
             author.setLocation(StringEscapeUtils.unescapeHtml4(sbnewLocation.toString()));
-            author.setScreenName(StringEscapeUtils.unescapeHtml4(sbnewScreenName.toString()));
-            author.setRealName(StringEscapeUtils.unescapeHtml4(sbnewName.toString()));
-            author.setFollowersCount(sbnewFollowers_count.toString());
-            author.setPic_url(StringEscapeUtils.unescapeHtml4(sbnewProfile_image_url.toString()));
+            author.setScreen_name(StringEscapeUtils.unescapeHtml4(sbnewScreenName.toString()));
+            author.setName(StringEscapeUtils.unescapeHtml4(sbnewName.toString()));
+            author.setFollowers_count(sbnewFollowers_count.toString());
+            author.setProfile_image_url(StringEscapeUtils.unescapeHtml4(sbnewProfile_image_url.toString()));
         }
 
         if (qName.equals("name")) {

@@ -16,7 +16,7 @@ public class AdminPanel {
 
     //the twitter callback returns to localhost
     public static boolean isLocal() {
-        return false;
+        return true;
     }
     //the Mongo instance is local, not on cloudbees
     public static boolean isMongoLocal() {

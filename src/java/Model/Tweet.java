@@ -5,7 +5,9 @@
 package Model;
 
 import Utils.Months;
+import com.google.code.morphia.Datastore;
 import com.google.code.morphia.annotations.Id;
+import com.google.code.morphia.annotations.NotSaved;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,21 +17,25 @@ public class Tweet implements Serializable {
 
     @Id
     private ObjectId id;
-    private Author author;
+    private String source;
+    private User source_user;
     private String text;
     private String target;
     private String monthYear;
     private Date date;
+    @NotSaved
+    private Datastore ds;
 
     public Tweet() {
     }
 
-    public Author getAuthor() {
-        return author;
+
+    public String getSource() {
+        return source;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public String getText() {
@@ -74,5 +80,13 @@ public class Tweet implements Serializable {
         int month = cal.get(Calendar.MONTH);
         int year = cal.get(Calendar.YEAR);
         return Months.getMonths(month) + " " + year;
+    }
+
+    public User getSource_user() {
+        return this.source_user;
+    }
+
+    public void setSource_user(User source_user) {
+        this.source_user = source_user;
     }
 }

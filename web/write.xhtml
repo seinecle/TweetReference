@@ -33,6 +33,10 @@
                     <br></br>
                     <h:outputText value="note: your Tweet reference will only appear here - not be tweeted."></h:outputText>
                 </h:form>
+                <p:panel rendered="#{userBean.unknownUser}">
+                    <h:outputText value="User unknown on Twitter. Probably a typo?"></h:outputText>
+                </p:panel>
+
             </div>
         </div>
         <script type="text/javascript">

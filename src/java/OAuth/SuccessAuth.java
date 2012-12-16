@@ -5,26 +5,18 @@
 package OAuth;
 
 import Controllers.ControllerBean;
-import java.io.BufferedReader;
+import Model.User;
+import Utils.PrehistoricJsonParser;
+import com.mongodb.util.JSON;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.io.StringReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Response;
 import org.scribe.model.Token;
-import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.xml.sax.InputSource;
 
@@ -39,7 +31,6 @@ public class SuccessAuth implements Serializable {
     String oauth_verifier;
     @ManagedProperty("#{oAuth}")
     private OAuth oAuth;
-    private String oauth_token;
     Token accessToken;
     private boolean successAuth;
     private String dummy;
@@ -75,24 +66,15 @@ public class SuccessAuth implements Serializable {
             successAuth = false;
             return "authsuccess?faces-redirect=true";
         }
-        OAuthRequest request = new OAuthRequest(Verb.GET, "http://api.twitter.com/1/account/verify_credentials.xml");
-        oAuth.getService().signRequest(accessToken, request); // the access token from step 4
-        Response response = request.send();
-
-        String responseString = response.getBody();
-        responseString = StringUtils.replace(responseString,"&amp;","and");
-        responseString = StringUtils.replace(responseString,"&quot;","");
-        responseString = StringUtils.replace(responseString,"&lt;","");
-        responseString = StringUtils.replace(responseString,"&gt;","");
-        responseString = StringUtils.replace(responseString,"&apos;","");
-        responseString = StringEscapeUtils.unescapeHtml4(responseString);
-        System.out.println(responseString);
-
-//        BufferedReader br = new BufferedReader(new InputStreamReader(response.getStream()));
-//        InputSource is = new InputSource(br);
-        InputSource is = new InputSource(new StringReader(responseString));
-        TwitterAPIresponseParser parser = new TwitterAPIresponseParser(is);
-        controllerBean.setAuthor(parser.parse());
+        controllerBean.setAccessToken(accessToken);
+        controllerBean.setoAuth(oAuth);
+        RequestSender requestSender = new RequestSender(oAuth, accessToken);
+        String responseString = requestSender.sendRequest("http://api.twitter.com/1.1/account/verify_credentials.json");
+        System.out.println("source: " + responseString);
+        User user = PrehistoricJsonParser.getUser(responseString);
+        controllerBean.setAuthor(user);
+        controllerBean.getDs().delete(controllerBean.getDs().createQuery(User.class).field("screen_name").equal(user.getScreen_name()));
+        controllerBean.getDs().save(user);
         return "write?faces-redirect=true";
     }
 
@@ -111,5 +93,4 @@ public class SuccessAuth implements Serializable {
     public void setSuccessAuth(boolean successAuth) {
         this.successAuth = successAuth;
     }
-
 }

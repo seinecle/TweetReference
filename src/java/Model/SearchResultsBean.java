@@ -28,21 +28,22 @@ public class SearchResultsBean {
         this.controllerBean = controllerBean;
     }
 
-    
-    
     public SearchResultsBean() {
     }
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         tweets = controllerBean.getListTweets();
-        
-    };
+        for (Tweet tweet : tweets) {
+            tweet.setSource_user(controllerBean.getDs().find(User.class).field("screen_name").equal(tweet.getSource()).get());
+        }
+
+    }
+
+    ;
     
 
     public List<Tweet> getReferences() {
         return tweets;
     }
-    
-    
 }

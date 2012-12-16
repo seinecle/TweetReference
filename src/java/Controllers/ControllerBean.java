@@ -4,8 +4,10 @@
  */
 package Controllers;
 
-import Model.Author;
+import Model.User;
 import Model.Tweet;
+import Model.User;
+import OAuth.OAuth;
 import Utils.APIkeys;
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Morphia;
@@ -22,6 +24,8 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.commons.lang3.StringUtils;
+import org.scribe.model.Token;
 
 /**
  *
@@ -39,7 +43,9 @@ public class ControllerBean implements Serializable {
     private String dummy;
     private static Mongo m;
     private static Morphia morphia;
-    private Author author;
+    private User author;
+    private OAuth oAuth;
+    private Token accessToken;
 
     public ControllerBean() {
     }
@@ -66,6 +72,7 @@ public class ControllerBean implements Serializable {
                     System.out.println("Morphia datastore on CloudBees / MongoHQ created!!!!!!!");
                 }
                 morphia.map(Tweet.class);
+                morphia.map(User.class);
             }
         } catch (UnknownHostException ex) {
             Logger.getLogger(ControllerBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,6 +103,13 @@ public class ControllerBean implements Serializable {
         return searchTerm;
     }
 
+    public String getSearchTermWithoutArobase() {
+        if (searchTerm != null) {
+            searchTerm = StringUtils.removeStart(searchTerm, "@");
+        }
+        return searchTerm;
+    }
+
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm.trim();
     }
@@ -120,11 +134,29 @@ public class ControllerBean implements Serializable {
         this.dummy = dummy;
     }
 
-    public Author getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(Author author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
+
+    public OAuth getoAuth() {
+        return oAuth;
+    }
+
+    public void setoAuth(OAuth oAuth) {
+        this.oAuth = oAuth;
+    }
+
+    public Token getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(Token accessToken) {
+        this.accessToken = accessToken;
+    }
+    
+    
 }
