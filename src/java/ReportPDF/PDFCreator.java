@@ -48,8 +48,12 @@ public class PDFCreator {
         ParagraphBuilder pb = new ParagraphBuilder(this.target);
         document.add(pb.getHeader());
         document.add(pb.getSubHeader());
+        int count = 0;
 
         for (Tweet tweet : listTweets) {
+            if (count > 0 & count % 3 == 0) {
+                document.newPage();
+            }
             System.out.println("");
             System.out.println("");
             System.out.println("");
@@ -64,6 +68,8 @@ public class PDFCreator {
             imgIText.setAlignment(Element.ALIGN_LEFT);
             document.add(imgIText);
             document.add(pb.getIdentity());
+            count++;
+
         }
 
 //        imgIText.setAbsolutePosition(Utilities.millimetersToPoints(30f), Utilities.millimetersToPoints(170f));

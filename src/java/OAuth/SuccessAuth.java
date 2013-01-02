@@ -7,10 +7,8 @@ package OAuth;
 import Controllers.ControllerBean;
 import Model.User;
 import Utils.PrehistoricJsonParser;
-import com.mongodb.util.JSON;
 import java.io.IOException;
 import java.io.Serializable;
-import java.io.StringReader;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -18,7 +16,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
-import org.xml.sax.InputSource;
 
 /**
  *

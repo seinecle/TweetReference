@@ -47,11 +47,13 @@ public class User implements Serializable {
     public void setScreen_name_ignorecase(String screen_name_ignorecase) {
         this.screen_name_ignorecase = screen_name_ignorecase;
     }
-    
-    
 
     public String getName() {
-        return name;
+        if (name == null) {
+            return "no name detected";
+        } else {
+            return name;
+        }
     }
 
     public void setName(String name) {
@@ -59,7 +61,11 @@ public class User implements Serializable {
     }
 
     public String getLocation() {
-        return location;
+        if (location == null) {
+            return "no location available";
+        } else {
+            return location;
+        }
     }
 
     public void setLocation(String location) {
@@ -67,7 +73,11 @@ public class User implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        if (description == null){
+            return "no description available";
+        }
+        else{
+        return description;}
     }
 
     public void setDescription(String description) {
@@ -113,8 +123,6 @@ public class User implements Serializable {
     public void setLang(String lang) {
         this.lang = lang;
     }
-    
-    
 
     @Override
     public String toString() {

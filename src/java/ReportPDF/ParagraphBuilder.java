@@ -6,6 +6,7 @@ package ReportPDF;
 
 import Model.Tweet;
 import Model.User;
+import com.itextpdf.text.Anchor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -60,6 +61,10 @@ public class ParagraphBuilder {
         subHeader.add(new Chunk(" "));
         subHeader.add(new Chunk(String.valueOf(new DateTime().getYear())));
         subHeader.add(new Chunk(")"));
+        subHeader.add(new Chunk("\n"));
+        subHeader.add(new Chunk("\n"));
+        subHeader.add(new Chunk("\n"));
+        subHeader.add(new Chunk("\n"));
         return subHeader;
     }
 
@@ -82,19 +87,30 @@ public class ParagraphBuilder {
         identity.add(new Chunk(tweet.getSource_user().getScreen_name()));
         identity.add(new Chunk(")\n"));
         identity.add(new Chunk(tweet.getSource_user().getDescription()));
-        identity.add(new Chunk("\n"));
+        if (tweet.getSource_user().getDescription().length() > 0) {
+            identity.add(new Chunk("\n"));
+        }
         identity.add(new Chunk(tweet.getSource_user().getLocation()));
+        if (tweet.getSource_user().getLocation().length() > 0) {
+            identity.add(new Chunk("\n"));
+        }
+        if (tweet.getSource_user().getUrl() != null && tweet.getSource_user().getUrl().length() > 0) {
+            Anchor anchor = new Anchor(
+                    tweet.getSource_user().getUrl());
+            anchor.setReference(
+                    tweet.getSource_user().getUrl());
+            identity.add(anchor);
+        }
         identity.add(new Chunk("\n"));
         identity.add(new Chunk("["));
         identity.add(new Chunk(tweet.getSource_user().getFollowers_count()));
         identity.add(new Chunk(" followers on Twitter]\n"));
         identity.add(new Chunk("\n"));
-        identity.add(new Chunk("\n"));
-        identity.add(new Chunk("says: \""+tweet.getText()+"\""));
-        identity.add(new Chunk("\n"));
+        identity.add(new Chunk("said in " + tweet.getMonthYear() + " : \"" + tweet.getText() + "\""));
         identity.add(new Chunk("\n"));
         identity.add(new Chunk("\n"));
-        
+        identity.add(new Chunk("\n"));
+
         identity.add(new Chunk("\n"));
         return identity;
     }

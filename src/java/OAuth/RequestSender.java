@@ -37,6 +37,7 @@ public class RequestSender {
         responseString = StringUtils.replace(responseString, "&gt;", "");
         responseString = StringUtils.replace(responseString, "&apos;", "");
         responseString = StringEscapeUtils.unescapeHtml4(responseString);
+        responseString = StringEscapeUtils.unescapeEcmaScript(responseString);
         return responseString;
 
     }
